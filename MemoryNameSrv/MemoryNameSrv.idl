@@ -1,0 +1,34 @@
+// MemoryNameSrv.idl : IDL source for MemoryNameSrv
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MemoryNameSrv.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+    uuid(62942058-ABBE-470F-96F3-07BBD139D5F0),
+    dual,
+    nonextensible,
+    pointer_default(unique)
+]
+interface INameServer : IDispatch {
+    [id(1), helpstring("GetSharedMemoryName")] HRESULT GetSharedMemoryName([out, retval] BSTR* pRet);
+};
+[
+    uuid(988FFEA4-BB4F-4483-81A1-23DECAC3FA53),
+    version(1.0),
+]
+library MemoryNameSrvLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(776AE393-FC9E-4CAB-B475-53EF3F5A5DC7)
+    ]
+    coclass NameServer
+    {
+        [default] interface INameServer;
+    };
+};

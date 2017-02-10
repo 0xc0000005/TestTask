@@ -1,0 +1,26 @@
+HKCR
+{
+	MemoryNameSrv.NameServer.1 = s 'NameServer Class'
+	{
+		CLSID = s '{776AE393-FC9E-4CAB-B475-53EF3F5A5DC7}'
+	}
+	MemoryNameSrv.NameServer = s 'NameServer Class'
+	{		
+		CurVer = s 'MemoryNameSrv.NameServer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {776AE393-FC9E-4CAB-B475-53EF3F5A5DC7} = s 'NameServer Class'
+		{
+			ProgID = s 'MemoryNameSrv.NameServer.1'
+			VersionIndependentProgID = s 'MemoryNameSrv.NameServer'
+			ForceRemove Programmable
+			LocalServer32 = s '%MODULE%'
+			{
+				val ServerExecutable = s '%MODULE_RAW%'
+			}
+			TypeLib = s '{988FFEA4-BB4F-4483-81A1-23DECAC3FA53}'
+			Version = s '1.0'
+		}
+	}
+}
