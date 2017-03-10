@@ -28,7 +28,7 @@ public:
 
     static std::unique_ptr<IFileExchangeServer> Create(std::unique_ptr<IExchangeServer> driver, std::unique_ptr<IFileSaver> saver);
 
-    virtual void ReceiveFiles();
+    virtual void ReceiveFiles() override;
 
 private:
     std::unique_ptr<IExchangeServer> m_driver;
@@ -45,7 +45,7 @@ public:
 
     static std::unique_ptr<IFileExchangeClient> Create(std::unique_ptr<IExchangeClient> driver);
 
-    virtual bool SendFile(const std::wstring& path);
+    virtual bool SendFile(const std::wstring& path) override;
 
 private:
     std::unique_ptr<IExchangeClient> m_driver;

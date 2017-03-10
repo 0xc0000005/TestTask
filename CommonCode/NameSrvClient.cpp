@@ -7,8 +7,10 @@
 
 ole_error_exception::ole_error_exception(HRESULT hr)
 {
+    std::stringstream s;
+    s << "OLE communication failed with error : 0x" << std::hex << hr;
     // Could use Win API FormatMessage() call to convert HRESULT code to string message
-    m_msg = "OLE communication failed with error : " + std::to_string(hr);
+    m_msg = s.str();
 }
 
 CNameSrvClient::CNameSrvClient() : m_name_server(nullptr)

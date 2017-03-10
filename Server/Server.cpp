@@ -3,7 +3,10 @@
 
 #include "stdafx.h"
 
+#include <conio.h>
 #include <thread>
+#include <future>
+#include <chrono>
 
 #include <boost/interprocess/exceptions.hpp>
 using boost::interprocess::interprocess_exception;
@@ -11,7 +14,7 @@ using boost::interprocess::interprocess_exception;
 #include "../CommonCode/Interfaces.h"
 #include "../CommonCode/Terminator.h"
 
-void ServerThread(ITerminator* terminator)
+void ServerThread(ITerminator* terminator, std::promise<void>& promise)
 {
     try {
         auto driver = ShrdMemExch_CreateServer(terminator);
@@ -19,6 +22,28 @@ void ServerThread(ITerminator* terminator)
         auto server = FileExch_CreateServer(std::move(driver), std::move(file_saver));
 
         server->ReceiveFiles();
+    }
+    catch (...) {
+        promise.set_exception(std::current_exception());
+    }
+}
+
+int main()
+{
+    std::promise<void> promise;
+    auto future = promise.get_future();
+
+    CTerminator terminator;
+    std::thread srv_thread(ServerThread, &terminator, std::move(promise));
+
+    std::cout << "Press [Enter] to stop server..." << std::endl;
+
+    try {
+        while (_kbhit() == 0) {
+            if (future.wait_for(std::chrono::seconds(1)) == std::future_status::ready)
+                future.get();
+        }
+        terminator.Terminate();
     }
     catch (interprocess_exception& e) {
         std::cout << std::endl << "Interprocess error: " << e.what() << std::endl;
@@ -37,17 +62,6 @@ void ServerThread(ITerminator* terminator)
     catch (std::exception& e) {
         std::cout << std::endl << e.what() << std::endl;
     }
-}
-
-int main()
-{
-    CTerminator terminator;
-    std::thread srv_thread(ServerThread, &terminator);
-
-    std::cout << "Press [Enter] to stop server..." << std::endl;
-    std::cin.get();
-
-    terminator.Terminate();
 
     srv_thread.join();
 

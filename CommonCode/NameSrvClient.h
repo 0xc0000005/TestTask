@@ -8,7 +8,7 @@
 struct ole_error_exception :
     std::exception
 {
-    virtual const char* what() const { return m_msg.c_str(); }
+    virtual const char* what() const override { return m_msg.c_str(); }
     ole_error_exception(HRESULT hr);
 
 private:

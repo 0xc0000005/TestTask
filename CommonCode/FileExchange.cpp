@@ -101,7 +101,7 @@ bool CFileExchangeClient::SendFile(const std::wstring & path)
                 return false;
             }
         }
-    } while (data_get >= data_size); // last time we read and sent less than buffer allows
+    } while (data_get >= static_cast<std::streampos>(data_size)); // last time we read and sent less than buffer allows
     
     return true;
 }

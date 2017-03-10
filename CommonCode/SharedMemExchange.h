@@ -33,8 +33,8 @@ public:
 
     static std::unique_ptr<IExchangeServer> Create(ITerminator* terminator);
 
-    virtual bool Receive(char* data, size_t len);
-    virtual size_t GetBufSize() const { return SharedMemoryBuf_t::buf_size; }
+    virtual bool Receive(char* data, size_t len) override;
+    virtual size_t GetBufSize() const override { return SharedMemoryBuf_t::buf_size; }
 
 private:
     bool isTerminated() {
@@ -56,9 +56,9 @@ public:
 
     static std::unique_ptr<IExchangeClient> Create();
 
-    virtual bool Send(const char* data, size_t len);
-    virtual size_t GetBufSize() const { return SharedMemoryBuf_t::buf_size; }
+    virtual bool Send(const char* data, size_t len) override;
+    virtual size_t GetBufSize() const override { return SharedMemoryBuf_t::buf_size; }
 
 private:
-    SharedMemoryBuf_t* m_buf;
+    SharedMemoryBuf_t* m_buf = nullptr;
 };

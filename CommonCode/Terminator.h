@@ -6,13 +6,13 @@ class CTerminator :
 {
 public:
 
-    CTerminator() : m_terminated(false) {}
+    CTerminator() {}
     ~CTerminator() {}
 
-    virtual void Terminate() { m_terminated = true; }
-    virtual bool IsTerminated() { return m_terminated; }
+    virtual void Terminate() override { m_terminated = true; }
+    virtual bool IsTerminated() override { return m_terminated; }
 
 private:
-    volatile bool m_terminated;
+    volatile bool m_terminated = false;
 };
 

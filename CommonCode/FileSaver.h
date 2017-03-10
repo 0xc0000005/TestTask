@@ -16,8 +16,8 @@ public:
 
     static std::unique_ptr<IFileSaver> Create(std::wstring folder);
 
-    virtual void OpenFile(std::wstring filename, std::streamsize size, unsigned long from_proc);
-    virtual void SaveData(unsigned long from_proc, const char* data, size_t size);
+    virtual void OpenFile(std::wstring filename, std::streamsize size, unsigned long from_proc) override;
+    virtual void SaveData(unsigned long from_proc, const char* data, size_t size) override;
 
 private:
 
