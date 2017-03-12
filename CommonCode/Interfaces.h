@@ -14,25 +14,25 @@ protected:
 };
 
 struct cannot_read_file_exception : file_exception_proto, std::exception {
-    virtual const char* what() const { return m_path.c_str(); }
+    virtual const char* what() const override { return m_path.c_str(); }
     cannot_read_file_exception(const std::wstring& path) : file_exception_proto(path) {}
     cannot_read_file_exception(const std::string& path) : file_exception_proto(path) {}
 };
 
 struct cannot_save_file_exception : file_exception_proto, std::exception {
-    virtual const char* what() const { return m_path.c_str(); }
+    virtual const char* what() const override { return m_path.c_str(); }
     cannot_save_file_exception(const std::wstring& path) : file_exception_proto(path) {}
     cannot_save_file_exception(const std::string& path) : file_exception_proto(path) {}
 };
 
 struct cannot_find_folder_exception : file_exception_proto, std::exception {
-    virtual const char* what() const { return m_path.c_str(); }
+    virtual const char* what() const override { return m_path.c_str(); }
     cannot_find_folder_exception(const std::wstring& path) : file_exception_proto(path) {}
     cannot_find_folder_exception(const std::string& path) : file_exception_proto(path) {}
 };
 
 struct data_too_long_exception : std::exception {
-    virtual const char* what() const { return "Data block is too large to send/receive"; }
+    virtual const char* what() const override { return "Data block is too large to send/receive"; }
 };
 
 class ITerminator
@@ -40,6 +40,9 @@ class ITerminator
 public:
     virtual void Terminate() = 0;
     virtual bool IsTerminated() = 0;
+
+    ITerminator() {}
+    virtual ~ITerminator() {}
 };
 
 class IExchangeClient
