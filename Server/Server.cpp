@@ -14,7 +14,7 @@ using boost::interprocess::interprocess_exception;
 #include "../CommonCode/Interfaces.h"
 #include "../CommonCode/Terminator.h"
 
-void ServerThread(ITerminator* terminator, std::promise<void>& promise)
+void ServerThread(ITerminator* terminator, std::promise<void> promise)
 {
     try {
         auto driver = ShrdMemExch_CreateServer(terminator);
